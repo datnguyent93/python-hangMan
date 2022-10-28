@@ -4,32 +4,41 @@ import string
 
 def get_valid_word(words):
     word = random.choice(words)
-    
     while '-' in word or ' ' in word:
         word = random.choice(words)
         
-    return word
+    return word.upper()
 
 def hangman():
     word = get_valid_word(words)
+    print(word)
     word_letters = set(word)    #ltters in the word
     alphabet = set(string.ascii_uppercase)
     used_letters = set() # what the user has guessed
-    
-    user_letter = input('Guess a letter: ').upper()
-    if user_letter in alphabet - used_letters:
-        used_letters.add(user_letter)
-        if user_letter in word_letters:
-            word_letters.remove(user_letter)
-    
-    elif user_letter in used_letters:
-        print('You have used that char. Try different one')
-    
-    else:
-        print('Invalid char. Try different one')
+    while len(word_letters) > 0:
+        #letters used
+        print('You have guessed these letters: ', ' '.join(used_letters))
+        
+        #what guess correctly so far
+        word_list = [letter if letter in used_letters else '-' for letter in word]
+        print('Current word: ' , ' '.join(word_list))
+        
+        user_letter = input('Guess a letter: ').upper()
+        if user_letter in alphabet - used_letters:
+            used_letters.add(user_letter)
+            if user_letter in word_letters:
+                word_letters.remove(user_letter)
+        
+        elif user_letter in used_letters:
+            print('You have used that char. Try different one')
+        
+        else:
+            print('Invalid char. Try different one')
+            
+    print(f'Congrat! you guessed the word {word}.')
 
             
             
-user_input = input('Type something: ')
-print(user_input)
+if __name__ == '__main__':
+    hangman()
             
