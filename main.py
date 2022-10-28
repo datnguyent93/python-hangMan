@@ -15,7 +15,10 @@ def hangman():
     word_letters = set(word)    #ltters in the word
     alphabet = set(string.ascii_uppercase)
     used_letters = set() # what the user has guessed
-    while len(word_letters) > 0:
+    
+    lives = 6
+    
+    while len(word_letters) > 0 and lives > 0:
         #letters used
         print('You have guessed these letters: ', ' '.join(used_letters))
         
@@ -28,14 +31,21 @@ def hangman():
             used_letters.add(user_letter)
             if user_letter in word_letters:
                 word_letters.remove(user_letter)
+            else:
+                lives -= 1
+                print('Letter is not in the word, silly')
+                print(f'Your lives have {lives} live(s) left')
         
         elif user_letter in used_letters:
             print('You have used that char. Try different one')
         
         else:
             print('Invalid char. Try different one')
-            
-    print(f'Congrat! you guessed the word {word}.')
+          
+    if lives == 0:
+        print(f'you died, the word is {word}')
+    else:
+        print(f'Congrat! you guessed the word {word}.')
 
             
             
